@@ -1,96 +1,176 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
-import { Sprout, MapPin, Mail } from "lucide-react";
+import {
+  Sprout,
+  Heart,
+  MapPin,
+  ShieldCheck,
+  Mail,
+  ArrowUpRight,
+  Phone,
+} from "lucide-react";
 
 export function Footer() {
-  const [year, setYear] = useState("2026");
-
-  useEffect(() => {
-    setYear(new Date().getFullYear().toString());
-  }, []);
-
   return (
-    <footer className="border-t border-[var(--border-color)] bg-[var(--surface)] text-[var(--text-muted)]">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--primary)] text-white">
+    <footer className="border-t border-[var(--border-color)] bg-[var(--surface)] transition-colors">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
+        
+          <div className="space-y-4 lg:col-span-2">
+            <Link href="/" className="group inline-flex items-center gap-2.5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--primary)] text-white shadow-sm transition group-hover:bg-[var(--primary-dark)]">
                 <Sprout className="h-5 w-5" />
               </div>
-              <span className="text-lg font-bold tracking-tight text-[var(--text-main)]">
-                Uddog • উদ্যোগ
-              </span>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xl font-black tracking-tight text-[var(--text-main)]">
+                    Uddog
+                  </span>
+                  <span className="rounded bg-[var(--primary)]/10 px-1.5 py-0.5 text-[10px] font-bold text-[var(--primary)]">
+                    উদ্যোগ
+                  </span>
+                </div>
+                <span className="text-[11px] font-medium text-[var(--text-muted)]">
+                  Small actions. Shared impact.
+                </span>
+              </div>
             </Link>
-            <p className="text-sm leading-relaxed">
-              Small actions. Shared impact. Connecting citizens across
-              Bangladesh to organize and join local community-service events.
+
+            <p className="max-w-sm text-xs leading-relaxed text-[var(--text-muted)]">
+              Bangladesh's curated community participation registry.
+              Facilitating verified grassroots initiatives—from canal plastic
+              clearance in Dhaka to riverbank reforestation in Jashore.
             </p>
-            <div className="flex items-center gap-3 pt-1">
-              <a
-                href="https://x.com"
-                aria-label="Follow on X"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-color)] text-[var(--text-main)] hover:bg-[var(--primary)] hover:text-white transition"
-              >
-                <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
+
+            <div className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-color)] bg-[var(--background)] px-3 py-1.5 text-xs text-[var(--text-main)]">
+              <ShieldCheck className="h-4 w-4 text-[var(--primary)]" />
+              <span className="font-semibold">
+                Independent Grassroots Infrastructure
+              </span>
             </div>
           </div>
+
+          {/* Civic Domains */}
           <div>
-            <h3 className="text-sm font-semibold text-[var(--text-main)]">
-              Navigation
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-main)] mb-3">
+              Civic Domains
             </h3>
-            <ul className="mt-3 space-y-2 text-sm">
+            <ul className="space-y-2 text-xs text-[var(--text-muted)]">
               <li>
                 <Link
-                  href="/events"
+                  href="/events?category=Plantation"
                   className="hover:text-[var(--primary)] transition"
                 >
-                  Upcoming Events
+                  Tree Reforestation
                 </Link>
               </li>
               <li>
+                <Link
+                  href="/events?category=Donation"
+                  className="hover:text-[var(--primary)] transition"
+                >
+                  Winter Warmth Relief
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/events?category=Cleanup"
+                  className="hover:text-[var(--primary)] transition"
+                >
+                  Canal & Ward Cleanup
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/events?category=Education"
+                  className="hover:text-[var(--primary)] transition"
+                >
+                  Street Book Banks
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/events?category=Healthcare"
+                  className="hover:text-[var(--primary)] transition"
+                >
+                  Blood Grouping Camps
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Regional Chapters */}
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-main)] mb-3">
+              Regional Wards
+            </h3>
+            <ul className="space-y-2 text-xs text-[var(--text-muted)]">
+              <li className="flex items-center gap-1.5">
+                <MapPin className="h-3.5 w-3.5 text-[var(--accent)]" />
+                <span>Dhaka (Mirpur, Mohammadpur)</span>
+              </li>
+              <li className="flex items-center gap-1.5">
+                <MapPin className="h-3.5 w-3.5 text-[var(--accent)]" />
+                <span>Jashore (Bhairab Basin)</span>
+              </li>
+              <li className="flex items-center gap-1.5">
+                <MapPin className="h-3.5 w-3.5 text-[var(--accent)]" />
+                <span>Khulna (Boyra Park Area)</span>
+              </li>
+              <li className="flex items-center gap-1.5">
+                <MapPin className="h-3.5 w-3.5 text-[var(--accent)]" />
+                <span>Chattogram (Agrabad Ward)</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Emergency & Dispatch */}
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-main)] mb-3">
+              Civic Helplines
+            </h3>
+            <ul className="space-y-2 text-xs text-[var(--text-muted)]">
+              <li className="flex items-center gap-2">
+                <Phone className="h-3.5 w-3.5 text-[var(--primary)]" />
+                <span>
+                  National Emergency: <strong>999</strong>
+                </span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="h-3.5 w-3.5 text-[var(--primary)]" />
+                <span>
+                  Govt Services: <strong>333</strong>
+                </span>
+              </li>
+              <li className="pt-2">
                 <Link
                   href="/create-event"
-                  className="hover:text-[var(--primary)] transition"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--primary)] hover:underline"
                 >
-                  Create Event
+                  <span>Propose an Initiative</span>
+                  <ArrowUpRight className="h-3.5 w-3.5" />
                 </Link>
               </li>
             </ul>
           </div>
-          <div>
-            <h3 className="text-sm font-semibold text-[var(--text-main)]">
-              Event Types
-            </h3>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li>Winter Clothes Donation</li>
-              <li>Tree Plantation Drives</li>
-              <li>Neighborhood Cleanup</li>
-            </ul>
-          </div>
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold text-[var(--text-main)]">
-              Community Desk
-            </h3>
-            <div className="flex items-center gap-2 text-sm">
-              <MapPin className="h-4 w-4 text-[var(--primary)]" />
-              <span>Dhaka, Bangladesh</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <Mail className="h-4 w-4 text-[var(--accent)]" />
-              <span>support@uddog.org.bd</span>
-            </div>
-          </div>
         </div>
-        <div className="mt-10 flex flex-col items-center justify-between border-t border-[var(--border-color)] pt-6 text-xs sm:flex-row">
-          <p>© {year} Uddog (উদ্যোগ). All rights reserved.</p>
+
+        {/* Bottom Bar */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[var(--border-color)] pt-8 sm:flex-row text-xs text-[var(--text-muted)]">
+          <p>
+            © 2026 Uddog Civic Network. Open for community initiatives across
+            Bangladesh.
+          </p>
+          <div className="flex items-center gap-1">
+            <span>Built with care for public good</span>
+            <Heart className="h-3.5 w-3.5 fill-[var(--accent)] text-[var(--accent)]" />
+          </div>
         </div>
       </div>
     </footer>
   );
 }
+
+export default Footer;
