@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { AuthProvider } from "@/context/AuthContext";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "sonner";
@@ -25,10 +26,12 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <Navbar />
-          <div className="flex-1">{children}</div>
-          <Footer />
-          <Toaster position="top-right" richColors closeButton />
+          <AuthProvider>
+            <Navbar />
+            <div className="flex-1">{children}</div>
+            <Footer />
+            <Toaster position="top-right" richColors closeButton />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
