@@ -8,14 +8,12 @@ import {
   User,
   Mail,
   Lock,
-  Image as ImageIcon,
   Eye,
   EyeOff,
   ArrowRight,
   Check,
   X,
   Sparkles,
-  ShieldCheck,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -25,17 +23,16 @@ export default function RegisterPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    photoURL: "",
     password: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  
   const hasUpperCase = /[A-Z]/.test(formData.password);
   const hasLowerCase = /[a-z]/.test(formData.password);
   const hasMinLength = formData.password.length >= 6;
+
   const isPasswordValid = hasUpperCase && hasLowerCase && hasMinLength;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,11 +45,6 @@ export default function RegisterPage() {
 
     if (!formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) {
       toast.error("Please provide a valid email address.");
-      return;
-    }
-
-    if (!formData.photoURL.trim()) {
-      toast.error("Please provide a valid profile photo URL.");
       return;
     }
 
@@ -78,7 +70,6 @@ export default function RegisterPage() {
       }
 
       toast.success("Account created successfully!");
-
       router.push("/login");
     } catch {
       toast.error("Something went wrong. Please try again.");
@@ -100,29 +91,29 @@ export default function RegisterPage() {
 
   return (
     <main className="min-h-screen bg-[var(--background)] py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center relative overflow-hidden">
-     
       <div className="absolute top-10 left-1/4 -z-10 h-80 w-80 rounded-full bg-[var(--primary)]/10 blur-[100px]" />
+
       <div className="absolute bottom-10 right-1/4 -z-10 h-80 w-80 rounded-full bg-[var(--accent)]/15 blur-[100px]" />
 
       <div className="w-full max-w-xl">
         <div className="rounded-[2.5rem] border border-[var(--border-color)] bg-[var(--surface)] p-8 sm:p-12 shadow-2xl backdrop-blur-xl">
-         
           <div className="text-center space-y-3">
             <div className="inline-flex items-center gap-1.5 rounded-full border border-[var(--primary)]/20 bg-[var(--primary)]/5 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[var(--primary)]">
               <Sparkles className="h-3.5 w-3.5 text-[var(--accent)]" />
               <span>Join the Movement</span>
             </div>
+
             <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-main)]">
               Create your <span className="text-[var(--primary)]">Uddog</span>{" "}
               profile
             </h1>
+
             <p className="text-sm text-[var(--text-muted)] max-w-sm mx-auto">
               Start organizing drives, joining cleanups, and tracking your
               collective community impact.
             </p>
           </div>
 
-          
           <div className="mt-8">
             <button
               type="button"
@@ -151,77 +142,92 @@ export default function RegisterPage() {
             </button>
           </div>
 
-         
           <div className="relative my-7 flex items-center justify-center">
             <div className="w-full border-t border-[var(--border-color)]" />
+
             <span className="absolute bg-[var(--surface)] px-3 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
               Or continue with email
             </span>
           </div>
 
-          
           <form onSubmit={handleSubmit} className="space-y-4">
-           
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] mb-1.5">
                 Full Name
               </label>
+
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--text-muted)]" />
+
                 <input
                   type="text"
                   required
+                  autoComplete="name"
                   placeholder="e.g. Tanvir Hasan"
                   value={formData.name}
                   onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
+                    setFormData({
+                      ...formData,
+                      name: e.target.value,
+                    })
                   }
                   className="h-12 w-full rounded-2xl border border-[var(--border-color)] bg-[var(--background)] pl-11 pr-4 text-sm font-semibold text-[var(--text-main)] placeholder:text-[var(--text-muted)]/60 focus:border-[var(--primary)] focus:outline-none transition-all"
                 />
               </div>
             </div>
 
-           
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] mb-1.5">
                 Email Address
               </label>
+
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--text-muted)]" />
+
                 <input
                   type="email"
                   required
+                  autoComplete="email"
                   placeholder="name@example.com"
                   value={formData.email}
                   onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
+                    setFormData({
+                      ...formData,
+                      email: e.target.value,
+                    })
                   }
                   className="h-12 w-full rounded-2xl border border-[var(--border-color)] bg-[var(--background)] pl-11 pr-4 text-sm font-semibold text-[var(--text-main)] placeholder:text-[var(--text-muted)]/60 focus:border-[var(--primary)] focus:outline-none transition-all"
                 />
               </div>
             </div>
 
-
-            
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] mb-1.5">
                 Password
               </label>
+
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--text-muted)]" />
+
                 <input
                   type={showPassword ? "text" : "password"}
                   required
+                  autoComplete="new-password"
                   placeholder="Create a strong password"
                   value={formData.password}
                   onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
+                    setFormData({
+                      ...formData,
+                      password: e.target.value,
+                    })
                   }
                   className="h-12 w-full rounded-2xl border border-[var(--border-color)] bg-[var(--background)] pl-11 pr-11 text-sm font-semibold text-[var(--text-main)] placeholder:text-[var(--text-muted)]/60 focus:border-[var(--primary)] focus:outline-none transition-all"
                 />
+
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-main)]"
                 >
                   {showPassword ? (
@@ -232,7 +238,6 @@ export default function RegisterPage() {
                 </button>
               </div>
 
-           
               <div className="mt-3 rounded-2xl border border-[var(--border-color)] bg-[var(--background)] p-3.5 space-y-2">
                 <div className="flex items-center gap-2 text-xs font-semibold">
                   {hasUpperCase ? (
@@ -240,6 +245,7 @@ export default function RegisterPage() {
                   ) : (
                     <X className="h-3.5 w-3.5 text-[var(--text-muted)]" />
                   )}
+
                   <span
                     className={
                       hasUpperCase
@@ -257,6 +263,7 @@ export default function RegisterPage() {
                   ) : (
                     <X className="h-3.5 w-3.5 text-[var(--text-muted)]" />
                   )}
+
                   <span
                     className={
                       hasLowerCase
@@ -274,6 +281,7 @@ export default function RegisterPage() {
                   ) : (
                     <X className="h-3.5 w-3.5 text-[var(--text-muted)]" />
                   )}
+
                   <span
                     className={
                       hasMinLength
@@ -287,7 +295,6 @@ export default function RegisterPage() {
               </div>
             </div>
 
-        
             <button
               type="submit"
               disabled={loading}
@@ -303,7 +310,6 @@ export default function RegisterPage() {
               )}
             </button>
           </form>
-
 
           <div className="mt-8 text-center text-xs font-medium text-[var(--text-muted)]">
             Already have an account?{" "}

@@ -197,7 +197,7 @@ const handleGoogleLogin = async () => {
 
          
           <div className="mt-8 text-center text-xs font-medium text-[var(--text-muted)]">
-            Don't have an account yet?{" "}
+            Don't have an account yet?
             <Link
               href="/register"
               className="font-bold text-[var(--primary)] hover:underline"

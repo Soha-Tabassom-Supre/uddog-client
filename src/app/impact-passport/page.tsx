@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Award,
@@ -14,6 +14,7 @@ import {
 
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
+import { authClient } from "@/lib/auth-client";
 
 export default function ImpactPassportPage() {
   return (
@@ -26,11 +27,75 @@ export default function ImpactPassportPage() {
 function PassportContent() {
   const { user } = useAuth();
 
+  const [eventsJoined, setEventsJoined] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!user?.id) return;
+
+    let isMounted = true;
+
+    const fetchJoinedEvents = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const tokenResult = await authClient.token();
+        const token = tokenResult.data?.token;
+
+        if (!token) {
+          throw new Error("Authentication token unavailable.");
+        }
+
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/events/joined`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch your registered events.");
+        }
+
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(
+            data.message || "Unable to load your participation records.",
+          );
+        }
+
+        if (isMounted) {
+          setEventsJoined(data.count ?? data.events?.length ?? 0);
+        }
+      } catch (err) {
+        console.error("Failed to fetch passport statistics:", err);
+
+        if (isMounted) {
+          setError("Could not load your participation statistics.");
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchJoinedEvents();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user?.id]);
 
   const stats = [
     {
-      label: "Events Joined",
-      value: 0,
+      label: "Events Registered",
+      value: loading ? "..." : eventsJoined,
       icon: CalendarCheck,
     },
     {
@@ -48,7 +113,7 @@ function PassportContent() {
   return (
     <main className="min-h-screen bg-[var(--background)] py-10 pb-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-     
+       
         <div className="mb-10 text-center max-w-2xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--primary)]/20 bg-[var(--primary)]/5 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[var(--primary)]">
             <Sparkles className="h-3.5 w-3.5 text-[var(--accent)]" />
@@ -66,10 +131,11 @@ function PassportContent() {
           </p>
         </div>
 
+      
         <section className="relative mb-12 overflow-hidden rounded-[2.5rem] border border-[var(--border-color)] bg-[var(--surface)] p-6 sm:p-12 shadow-md">
           <div className="flex flex-col md:flex-row items-center gap-8 justify-between">
+          
             <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-            
               {user?.image ? (
                 <img
                   src={user.image}
@@ -107,7 +173,7 @@ function PassportContent() {
               </div>
             </div>
 
-          
+           
             <div className="grid grid-cols-3 gap-4 sm:gap-6 border-t md:border-t-0 md:border-l border-[var(--border-color)] pt-6 md:pt-0 md:pl-8 text-center w-full md:w-auto">
               {stats.map((stat) => {
                 const Icon = stat.icon;
@@ -128,9 +194,13 @@ function PassportContent() {
               })}
             </div>
           </div>
+
+          {error && (
+            <p className="mt-5 text-center text-xs text-red-500">{error}</p>
+          )}
         </section>
 
-      
+
         <section>
           <div className="flex items-center gap-2 mb-6">
             <Award className="h-5 w-5 text-[var(--primary)]" />

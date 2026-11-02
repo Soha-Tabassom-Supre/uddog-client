@@ -52,7 +52,7 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Civic Domains */}
+
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-main)] mb-3">
               Civic Domains
@@ -101,7 +101,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Regional Chapters */}
+         
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-main)] mb-3">
               Regional Wards
@@ -126,7 +126,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Emergency & Dispatch */}
+        
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-main)] mb-3">
               Civic Helplines
@@ -157,7 +157,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+       
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[var(--border-color)] pt-8 sm:flex-row text-xs text-[var(--text-muted)]">
           <p>
             © 2026 Uddog Civic Network. Open for community initiatives across

@@ -5,7 +5,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "sonner";
-
+import { Suspense } from "react";
 export const metadata: Metadata = {
   title: "Uddog (উদ্যোগ) — Small actions. Shared impact.",
   description:
@@ -27,7 +27,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <Navbar />
+            <Suspense fallback={<div className="h-16" />}>
+              <Navbar />
+            </Suspense>
             <div className="flex-1">{children}</div>
             <Footer />
             <Toaster position="top-right" richColors closeButton />
