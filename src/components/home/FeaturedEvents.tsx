@@ -11,8 +11,9 @@ interface ApiEvent extends Omit<EventItem, "location"> {
   location:
     | string
     | {
-        area: string;
-        city: string;
+        division?: string;
+        area?: string;
+        city?: string;
         address?: string;
       };
 }
@@ -31,13 +32,19 @@ function normalizeEvent(event: ApiEvent): EventItem {
       .map((part) => part.trim())
       .filter(Boolean);
 
-    location = {
-      area: parts[0] || "Location to be announced",
-      city: parts.length > 1 ? parts[parts.length - 1] : parts[0] || "Unknown",
-      address: event.location,
-    };
+  location = {
+    division: "",
+    area: parts[0] || "Location to be announced",
+    city: parts.length > 1 ? parts[parts.length - 1] : parts[0] || "Unknown",
+    address: event.location,
+  };
   } else {
-    location = event.location;
+    location = {
+      division: event.location.division || "",
+      area: event.location.area || "",
+      city: event.location.city || "",
+      address: event.location.address || "",
+    };
   }
 
   return {

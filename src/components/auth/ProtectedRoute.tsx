@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { CivicLoader } from "@/components/ui/CivicLoader";
 import { toast } from "sonner";
 
-export function ProtectedRoute({ children }: { children: React.ReactNode }) {
+function ProtectedRouteContent({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -27,4 +27,12 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   }
 
   return <>{children}</>;
+}
+
+export function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense fallback={<CivicLoader message="Loading organizer portal..." />}>
+      <ProtectedRouteContent>{children}</ProtectedRouteContent>
+    </Suspense>
+  );
 }

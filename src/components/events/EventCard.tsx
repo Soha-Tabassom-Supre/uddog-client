@@ -12,8 +12,9 @@ export interface EventItem {
   imageUrl: string;
   location: {
     division: string;
-    city: string; 
+    city: string;
     area: string;
+    address?: string;
   };
   eventDate: string;
   organizerName?: string;
