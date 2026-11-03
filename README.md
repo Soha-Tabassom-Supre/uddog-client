@@ -135,8 +135,8 @@ Uddog uses a warm, modern editorial design approach.
 ## 📸 Screenshots
 
  ### Homepage
- ![Homepage](image.png)
-
+ ![Homepage](image-2.png)
+ 
 
 ### Explore Initiatives
 ![Event Page](image-1.png)
