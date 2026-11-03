@@ -10,7 +10,7 @@ function ProtectedRouteContent({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-
+  
   useEffect(() => {
     if (!loading && !user) {
       toast.error("Please sign in to access this organizer page.");
@@ -21,7 +21,7 @@ function ProtectedRouteContent({ children }: { children: React.ReactNode }) {
   if (loading) {
     return <CivicLoader message="Authorizing organizer session..." />;
   }
-
+   
   if (!user) {
     return <CivicLoader message="Redirecting to login portal..." />;
   }
