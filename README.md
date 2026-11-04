@@ -97,32 +97,6 @@ npm run dev
 
 Open http://localhost:3000 in your browser.
 
-## 📁 Project Structure
-
-
-uddog-client/
-├── public/
-├── src/
-│   ├── app/
-│   │   ├── api/
-│   │   ├── events/
-│   │   ├── login/
-│   │   ├── register/
-│   │   ├── create-event/
-│   │   └── manage-events/
-│   ├── components/
-│   │   ├── auth/
-│   │   ├── events/
-│   │   ├── home/
-│   │   ├── layout/
-│   │   └── ui/
-│   ├── context/
-│   └── lib/
-├── .env.example
-├── package.json
-└── README.md
-
-
 ## 🎨 Design Direction
 
 Uddog uses a warm, modern editorial design approach.
